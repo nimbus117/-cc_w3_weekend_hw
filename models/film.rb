@@ -51,9 +51,13 @@ class Film
       FROM
         films
       INNER JOIN
+        screenings
+      ON
+        films.id = screenings.film_id
+      INNER JOIN
         tickets
       ON
-        tickets.film_id = films.id
+        screenings.id = tickets.Screening_id
       INNER JOIN
         customers
       ON

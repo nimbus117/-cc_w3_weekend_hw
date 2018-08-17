@@ -16,7 +16,7 @@ CREATE TABLE customers(
 );
 
 CREATE TABLE tickets(
-	price VARCHAR(255) NOT NULL,
+	id SERIAL8 PRIMARY KEY,
 	customer_id INT8 REFERENCES customers(id),
 	film_id INT8 REFERENCES films(id)
 );

@@ -1,22 +1,22 @@
 class Ticket
-  attr_accessor :film_id, :customer_id
+  attr_accessor :screening_id, :customer_id
   attr_reader :id
 
   def initialize(options)
     @id = options['id'].to_i if options['id']
-    @film_id = options['film_id'].to_i
+    @screening_id = options['screening_id'].to_i
     @customer_id = options['customer_id'].to_i
   end
 
   def save
     sql = "
       INSERT INTO tickets
-        (film_id, customer_id)
+        (screening_id, customer_id)
       VALUES
         ($1, $2)
       RETURNING id
     "
-    values = [@film_id, @customer_id]
+    values = [@screening_id, @customer_id]
     @id = SqlRunner.run(sql, values)[0]['id'].to_i
   end
 
@@ -25,11 +25,11 @@ class Ticket
       UPDATE
         tickets
       SET
-        (film_id, customer_id) = ($1, $2)
+        (screening_id, customer_id) = ($1, $2)
       WHERE
         id = $3
       "
-    values = [@film_id, @customer_id, @id]
+    values = [@screening_id, @customer_id, @id]
     SqlRunner.run(sql, values)
   end
 

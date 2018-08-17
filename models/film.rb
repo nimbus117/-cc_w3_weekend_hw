@@ -70,6 +70,10 @@ class Film
     Customer.map_items(customers)
   end
 
+  def customer_count
+      customers.count
+  end
+
   def Film.map_items(film_data)
     film_data.map {|film| Film.new(film)}
   end

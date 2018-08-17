@@ -67,6 +67,10 @@ class Screening
     Customer.map_items(customers)
   end
 
+  def customer_count
+      customers.count
+  end
+
   def Screening.map_items(screening_data)
     screening_data.map {|screening| Screening.new(screening)}
   end

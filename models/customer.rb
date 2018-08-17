@@ -55,9 +55,13 @@ class Customer
       ON
         tickets.customer_id = customers.id
       INNER JOIN
+        screenings
+      ON
+        screenings.id = tickets.screening_id
+      INNER JOIN
         films
       ON
-        films.id = tickets.film_id
+        screenings.film_id = films.id
       WHERE
         customers.id = $1
     " 

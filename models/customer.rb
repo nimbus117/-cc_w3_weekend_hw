@@ -70,6 +70,37 @@ class Customer
     Film.map_items(films)
   end
 
+  def tickets
+    sql = "
+      SELECT
+        *
+      FROM
+        tickets
+      WHERE
+        customer_id = $1
+    "
+    values = [@id]
+    tickets = SqlRunner.run(sql, values)
+    Ticket.map_items(tickets)
+  end
+
+  def ticket_count
+    tickets.count
+  end
+
+  def ticket_sql_count
+    sql = "
+      SELECT
+        COUNT(*)
+      FROM
+        tickets
+      WHERE
+        customer_id = $1
+    "
+    values = [@id]
+    SqlRunner.run(sql, values)[0]['count'].to_i
+  end
+
   def Customer.map_items(customer_data)
     customer_data.map {|customer| Customer.new(customer)}
   end

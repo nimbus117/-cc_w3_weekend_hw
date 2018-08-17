@@ -1,0 +1,22 @@
+DROP TABLE IF EXISTS tickets;
+DROP TABLE IF EXISTS films;
+DROP TABLE IF EXISTS customers;
+
+
+CREATE TABLE films(
+	id SERIAL8 PRIMARY KEY,
+	title VARCHAR(255) NOT NULL,
+	price VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE customers(
+	id SERIAL8 PRIMARY KEY,
+	name VARCHAR(255) NOT NULL,
+	funds INT2 NOT NULL
+);
+
+CREATE TABLE tickets(
+	price VARCHAR(255) NOT NULL,
+	customer_id INT8 REFERENCES customers(id),
+	film_id INT8 REFERENCES films(id)
+);

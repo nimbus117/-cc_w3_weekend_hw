@@ -101,6 +101,29 @@ class Customer
     SqlRunner.run(sql, values)[0]['count'].to_i
   end
 
+  def buy_ticket(screening)
+    capacity = screening.capacity
+    total_bookings = screening.tickets.count
+    price = screening.film.price
+    # p capacity
+    # p total_bookings
+    # p price
+
+    if capacity - total_bookings > 0
+      if @funds >= price
+
+        bought_ticket = Ticket.new({
+          'screening_id' => screening.id,
+          'customer_id' => @id
+        })
+        bought_ticket.save
+        
+        @funds -= price
+        update
+      end
+    end
+  end
+
   def Customer.map_items(customer_data)
     customer_data.map {|customer| Customer.new(customer)}
   end

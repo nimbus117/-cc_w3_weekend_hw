@@ -58,6 +58,20 @@ class Ticket
     Screening.new(returned_screening)
   end
 
+  def customer
+    sql = "
+      SELECT
+        *
+      FROM
+        customers
+      WHERE
+        id = $1
+    "
+    values = [@customer_id]
+    returned_customer = SqlRunner.run(sql, values)[0]
+    Customer.new(returned_customer)
+  end
+
   def Ticket.map_items(ticket_data)
     ticket_data.map {|ticket| Ticket.new(ticket)}
   end

@@ -114,7 +114,12 @@ class Customer
         bought_ticket.save
         @funds -= price
         update
+        return true
+      else
+        return false
       end
+    else
+      return false
     end
   end
 

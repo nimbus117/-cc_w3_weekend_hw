@@ -39,9 +39,23 @@ class Ticket
         tickets
       WHERE
         id = $1
-      "
+    "
     values = [@id]
     SqlRunner.run(sql, values)
+  end
+
+  def screening
+    sql = "
+      SELECT
+        *
+      FROM
+        screenings
+      WHERE
+        id = $1
+    "
+    values = [@screening_id]
+    returned_screening = SqlRunner.run(sql, values)[0]
+    Screening.new(returned_screening)
   end
 
   def Ticket.map_items(ticket_data)

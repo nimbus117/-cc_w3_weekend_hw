@@ -74,6 +74,36 @@ class Film
       customers.count
   end
 
+  def tickets
+    sql = "
+      SELECT
+        tickets.*
+      FROM
+        films
+      INNER JOIN
+        screenings
+      ON
+        films.id = screenings.film_id
+      INNER JOIN
+        tickets
+      ON
+        screenings.id = tickets.Screening_id
+      WHERE
+        films.id = $1
+    " 
+    values = [@id]
+    tickets = SqlRunner.run(sql, values)
+    Ticket.map_items(tickets)
+  end
+
+  def popular_screening
+    grouped = tickets().group_by {|ticket| ticket.screening_id}
+    # p grouped
+    sorted = grouped.sort_by {|screening, tickets| tickets.count}
+    # p sorted
+    sorted.flatten.last.screening
+  end
+
   def Film.map_items(film_data)
     film_data.map {|film| Film.new(film)}
   end

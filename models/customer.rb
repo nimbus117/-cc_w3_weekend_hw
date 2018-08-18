@@ -103,21 +103,15 @@ class Customer
 
   def buy_ticket(screening)
     capacity = screening.capacity
-    total_bookings = screening.tickets.count
+    total_bookings = screening.ticket_count
     price = screening.film.price
-    # p capacity
-    # p total_bookings
-    # p price
-
     if capacity - total_bookings > 0
       if @funds >= price
-
         bought_ticket = Ticket.new({
           'screening_id' => screening.id,
           'customer_id' => @id
         })
         bought_ticket.save
-        
         @funds -= price
         update
       end

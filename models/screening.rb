@@ -63,8 +63,26 @@ class Screening
         screenings.id = $1
     " 
     values = [@id]
-    customers = SqlRunner.run(sql, values)
-    Customer.map_items(customers)
+    screening_customers = SqlRunner.run(sql, values)
+    Customer.map_items(screening_customers)
+  end
+
+  def tickets
+    sql = "
+      SELECT
+        tickets.*
+      FROM
+        screenings
+      INNER JOIN
+        tickets
+      ON
+        tickets.screening_id = screenings.id
+      WHERE
+        screenings.id = $1
+    " 
+    values = [@id]
+    screening_tickets = SqlRunner.run(sql, values)
+    Ticket.map_items(screening_tickets)
   end
 
   def customer_count

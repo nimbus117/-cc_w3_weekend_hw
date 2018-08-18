@@ -96,6 +96,20 @@ class Film
     Ticket.map_items(tickets)
   end
 
+  def screenings
+    sql = "
+      SELECT
+        *
+      FROM
+        screenings
+      WHERE
+        film_id = $1
+    "
+    values = [@id]
+    screenings = SqlRunner.run(sql, values)
+    Screening.map_items(screenings)
+  end
+
   def popular_screening
     grouped = tickets().group_by {|ticket| ticket.screening_id}
     # p grouped

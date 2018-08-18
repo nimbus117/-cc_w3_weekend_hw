@@ -118,6 +118,15 @@ class Film
     sorted.flatten.last.screening
   end
 
+  def popular_screening2
+    film_screenings = screenings
+    # p film_screenings
+    screening_tickets = film_screenings.map {|scr| scr.tickets}
+    # p screening_tickets
+    sorted_tickets = screening_tickets.sort_by {|tic| tic.count}
+    sorted_tickets.flatten.last.screening
+  end
+
   def Film.map_items(film_data)
     film_data.map {|film| Film.new(film)}
   end

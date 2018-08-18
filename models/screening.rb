@@ -85,8 +85,8 @@ class Screening
     Ticket.map_items(screening_tickets)
   end
 
-  def customer_count
-      customers.count
+  def ticket_count
+      tickets.count
   end
 
   def film

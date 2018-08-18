@@ -70,10 +70,6 @@ class Film
     Customer.map_items(customers)
   end
 
-  def customer_count
-      customers.count
-  end
-
   def tickets
     sql = "
       SELECT
@@ -94,6 +90,10 @@ class Film
     values = [@id]
     tickets = SqlRunner.run(sql, values)
     Ticket.map_items(tickets)
+  end
+
+  def ticket_count
+      tickets.count
   end
 
   def screenings

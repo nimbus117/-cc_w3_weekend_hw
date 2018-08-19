@@ -49,11 +49,7 @@ class Customer
       SELECT
         films.*
       FROM
-        customers
-      INNER JOIN
         tickets
-      ON
-        tickets.customer_id = customers.id
       INNER JOIN
         screenings
       ON
@@ -63,7 +59,7 @@ class Customer
       ON
         screenings.film_id = films.id
       WHERE
-        customers.id = $1
+        tickets.customer_id = $1
     " 
     values = [@id]
     films = SqlRunner.run(sql, values)

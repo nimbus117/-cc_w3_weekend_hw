@@ -50,17 +50,13 @@ class Screening
       SELECT
         customers.*
       FROM
-        screenings
-      INNER JOIN
         tickets
-      ON
-        tickets.screening_id = screenings.id
       INNER JOIN
         customers
       ON
         customers.id = tickets.customer_id
       WHERE
-        screenings.id = $1
+        tickets.screening_id = $1
     " 
     values = [@id]
     screening_customers = SqlRunner.run(sql, values)
@@ -70,15 +66,11 @@ class Screening
   def tickets
     sql = "
       SELECT
-        tickets.*
+        *
       FROM
-        screenings
-      INNER JOIN
         tickets
-      ON
-        tickets.screening_id = screenings.id
       WHERE
-        screenings.id = $1
+        screening_id = $1
     " 
     values = [@id]
     screening_tickets = SqlRunner.run(sql, values)

@@ -81,6 +81,19 @@ class Screening
       tickets.count
   end
 
+  def ticket_count_sql
+    sql = "
+      SELECT
+        COUNT(*)
+      FROM
+        tickets
+      WHERE
+        screening_id = $1
+    "
+    values = [@id]
+    SqlRunner.run(sql, values)[0]['count'].to_i
+  end
+
   def film
     sql = "
       SELECT

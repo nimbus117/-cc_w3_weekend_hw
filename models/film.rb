@@ -84,6 +84,23 @@ class Film
     Ticket.map_items(tickets)
   end
 
+  def ticket_count_sql
+    sql = "
+      SELECT
+        COUNT(*)
+      FROM
+        screenings
+      INNER JOIN
+        tickets
+      ON
+        screenings.id = tickets.Screening_id
+      WHERE
+        screenings.film_id = $1
+    "
+    values = [@id]
+    SqlRunner.run(sql, values)[0]['count'].to_i
+  end
+
   def ticket_count
       tickets.count
   end

@@ -127,6 +127,33 @@ class Film
     sorted_tickets.flatten.last.screening
   end
 
+  def popular_screening_sql
+    sql = "
+      SELECT
+        COUNT(tickets.screening_id),
+          screenings.*
+      FROM
+        tickets
+      INNER JOIN
+        screenings
+      ON
+        tickets.screening_id = screenings.id
+      WHERE
+        screenings.film_id = $1
+      GROUP BY
+        screenings.id,
+        screenings.show_time,
+        screenings.film_id,
+        screenings.capacity
+      ORDER BY
+        count desc
+      LIMIT 1
+    "
+    values = [@id]
+    popular_screening = SqlRunner.run(sql, values)[0]
+    Screening.new(popular_screening)
+  end
+
   def Film.map_items(film_data)
     film_data.map {|film| Film.new(film)}
   end

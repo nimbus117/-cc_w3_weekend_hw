@@ -101,19 +101,15 @@ class Customer
     capacity = screening.capacity
     total_bookings = screening.ticket_count
     price = screening.film.price
-    if capacity - total_bookings > 0
-      if @funds >= price
-        bought_ticket = Ticket.new({
-          'screening_id' => screening.id,
-          'customer_id' => @id
-        })
-        bought_ticket.save
-        @funds -= price
-        update
-        return true
-      else
-        return false
-      end
+    if capacity - total_bookings > 0 && @funds >= price
+      bought_ticket = Ticket.new({
+        'screening_id' => screening.id,
+        'customer_id' => @id
+      })
+      bought_ticket.save
+      @funds -= price
+      update
+      return true
     else
       return false
     end

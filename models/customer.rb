@@ -88,7 +88,7 @@ class Customer
     tickets.count
   end
 
-  def ticket_sql_count
+  def ticket_count_sql
     sql = "
       SELECT
         COUNT(*)
